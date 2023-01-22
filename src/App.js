@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
+import AuthContext from "./store/auth-context";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const authCtx = useContext(AuthContext);
+  /*
+ const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   useEffect(
     () => {
       const storeUserLoggedInInfomation = localStorage.getItem("isLoggedIn");
@@ -18,7 +21,7 @@ function App() {
     // dependency 의존성
     []
   );
-
+  
   const loginHandler = (email, password) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
@@ -30,15 +33,13 @@ function App() {
     localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
   };
+  */
 
   return (
-    <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>
-    </React.Fragment>
+    <>
+      <MainHeader />
+      <main>{authCtx.isLoggedIn ? <Home /> : <Login />}</main>
+    </>
   );
 }
 
